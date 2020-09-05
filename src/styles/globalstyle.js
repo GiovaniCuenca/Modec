@@ -29,6 +29,11 @@ export default createGlobalStyle`
 
     a {
         text-decoration: none;
+        color: ${colors.modecGray};
+
+        :hover {
+            color: ${colors.modecBlue};
+        }
     }
 
     ul {
@@ -42,6 +47,10 @@ export default createGlobalStyle`
     .container {
         max-width: 1190px;
         width: 100%;
+
+        text-align: center;
+        display: flex;
+        justify-content: center;
     }
 
     .tooltip {

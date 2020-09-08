@@ -36,44 +36,6 @@ const SelectedCity = (props) => {
         return _temp
     }
 
-    const teste = {
-        "id": 3467865,
-        "name": "Campinas",
-        "coord": {
-            "lat": -22.91,
-            "lon": -47.06
-        },
-        "main": {
-            "temp": 306.58,
-            "feels_like": 304.66,
-            "temp_min": 304.15,
-            "temp_max": 309.26,
-            "pressure": 1020,
-            "humidity": 23
-        },
-        "dt": 1599325961,
-        "wind": {
-            "speed": 2.6,
-            "deg": 0
-        },
-        "sys": {
-            "country": "BR"
-        },
-        "rain": null,
-        "snow": null,
-        "clouds": {
-            "all": 20
-        },
-        "weather": [
-            {
-                "id": 801,
-                "main": "Clouds",
-                "description": "few clouds",
-                "icon": "02d"
-            }
-        ]
-    }
-
     return (
         <SelectedCityContainer>
             <button
@@ -87,31 +49,31 @@ const SelectedCity = (props) => {
                     <div className="weather-container">
                         <div className="top-container">
                             <div className="left">
-                                <h1>{teste.name}</h1>
-                                <p>{teste.sys.country}</p>
+                                <h1>{cityParams.name}</h1>
+                                <p>{cityParams.sys.country}</p>
                                 <div className="temp-container">
-                                    <h1 className="temperature">{temperatureConverter(teste.main.temp)}<span>°C</span></h1>
+                                    <h1 className="temperature">{temperatureConverter(cityParams.main.temp)}<span>°C</span></h1>
                                 </div>
 
-                                <img src={`http://openweathermap.org/img/w/${teste.weather[0].icon}.png`} alt=""/>
-                                <p>{teste.weather[0].description}</p>
+                                <img src={`http://openweathermap.org/img/w/${cityParams.weather[0].icon}.png`} alt=""/>
+                                <p>{cityParams.weather[0].description}</p>
                             </div>
                             <div className="right">
                                 <div className="temp-right">
                                     <p>Min: </p>
-                                    <p>{temperatureConverter(teste.main["temp_min"])}</p>
+                                    <p>{temperatureConverter(cityParams.main["temp_min"])}</p>
                                     <FaTemperatureLow size={20} color="#FFF" />
                                 </div>
 
                                 <div className="temp-right">
                                     <p>Max: </p>
-                                    <p>{temperatureConverter(teste.main["temp_max"])}</p>
+                                    <p>{temperatureConverter(cityParams.main["temp_max"])}</p>
                                     <FaTemperatureHigh size={20} color="#FFF" />
                                 </div>
 
                                 <div className="temp-right">
                                     <p>Feels Like: </p>
-                                    <p>{temperatureConverter(teste.main["temp_max"])}</p>
+                                    <p>{temperatureConverter(cityParams.main["temp_max"])}</p>
                                 </div>
 
                             </div>

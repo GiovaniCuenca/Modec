@@ -27,23 +27,22 @@ export class MapContainer extends Component {
 
     render() {
         return (
-            <Map
-                google={this.props.google}
-                zoom={8}
-                style={mapStyles}
-                initialCenter={{ lat: 47.444, lng: -122.176 }}
+            <div
+                className="col text-center"
+                style={{ width: "100%", height: "550px" }}
             >
-                {this.displayMarkers()}
-            </Map>
+                <Map
+                    google={this.props.google}
+                    zoom={8}
+                    initialCenter={{ lat: 47.444, lng: -122.176 }}
+                >
+                    {this.displayMarkers()}
+                </Map>
+            </div>
         );
     }
 }
 
 export default GoogleApiWrapper({
     apiKey: 'AIzaSyB8e7EfWiO3D-Y_NcSCkElZaQMH3-9gAJs'
-  })(MapContainer);
-
-const mapStyles = {
-    width: '100%',
-    height: '100%',
-  };
+})(MapContainer);

@@ -1,30 +1,34 @@
-import React, { useState, useEffect } from 'react'
-import MapContainer from './components/MainMapContainer'
+import React, { useState } from 'react'
 import { CustomModal } from '../../components'
+import GoogleMaps from '../../components/GoogleMaps/GoogleMaps'
 import { MainMapContainer } from './styles'
 import { OpenWeatherMap } from '../../config'
 import api from '../../services/api'
 
 const MainMap = () => {
-    const [chosenMark, setChosenMark] = useState('');
     const [cities, setCities] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [ isOpen, setIsOpen ] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [location, setLocation] = useState();
 
     const handleCities = async () => {
+        if(!location) {
+            return;
+        }
+
         setIsLoading(true)
-        // const response = await api.get(`data/2.5/find?lat=${'-23.5691402'}&lon=${'-46.7022257'}&cnt=15&APPID=${OpenWeatherMap.APP_ID}`);
-        const response = await api.get(`http://api.openweathermap.org/data/2.5/find?lat=-22.9371726&lon=-47.046903&cnt=15&APPID=0b037c423a36a7d3e12f4df47b5c820d`);
-        console.log(response.data.list)
+        const response = await api.get(`data/2.5/find?lat=${location.lat}&lon=${location.lng}&cnt=15&APPID=${OpenWeatherMap.APP_ID}`);
         setCities(response.data.list);
         setIsLoading(false)
     }
 
-    useEffect(() => {
-        handleCities();
-    }, [chosenMark]);
-
     const openModal = condition => {
+        handleCities();
+
+        if(!location) {
+            return;
+        }
+
         setIsOpen(condition);
     }
 
@@ -32,23 +36,26 @@ const MainMap = () => {
         setIsOpen(condition);
     }
 
+    const handleMouseClick = (x, y, lat, lng, event) => {
+        const _lat = lat.latLng.lat()
+        const _lng = lat.latLng.lng()
+
+        console.log({ lat: _lat, lng: _lng })
+        setLocation({ lat: _lat, lng: _lng })
+    }
+
     return (
         <>
-            <CustomModal isOpen={isOpen} closeModal={() => closeModal()} citiesList={cities}/>
+            <CustomModal isOpen={isOpen} closeModal={() => closeModal()} citiesList={cities} />
 
             <MainMapContainer>
                 <div className="container">
-                    <div className="map-wrapper">
+                    <h1 className="page-title">Weather Acessment</h1>
+                    <p className="page-content">Mark the Map with the desired Location and click at the "Search" button</p>
 
-                        <button onClick={openModal}>Open Modal</button>
+                    <button onClick={openModal}>SEARCH</button>
 
-                        {isLoading ? 'Loading..' : (
-                            cities.map(teste =>
-                                <h1>{teste.name}</h1>
-                            )
-                        )}
-                        {/* <MapContainer /> */}
-                    </div>
+                    <GoogleMaps handleClick={handleMouseClick} location={location}/>
                 </div>
             </MainMapContainer>
         </>

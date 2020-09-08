@@ -1,6 +1,5 @@
 import React from 'react'
 
-import logoHeader from '../../assets/images/logo-header.svg';
 import { HeaderContainer, HeaderContent } from './styles';
 
 const Header = ({user = 'Giovani Cuenca'}) => {

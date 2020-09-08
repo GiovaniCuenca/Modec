@@ -44,13 +44,23 @@ export default createGlobalStyle`
         cursor: pointer;
     }
 
+    .page-title {
+        margin-bottom: 24px;
+        font-size: 2rem;
+        color: ${colors.modecBlue};
+    }
+
+    .page-content {
+        margin-bottom: 24px;
+        font-size: 1rem;
+        color: ${colors.modecGray};
+    }
+
     .container {
         max-width: 1190px;
         width: 100%;
 
         text-align: center;
-        display: flex;
-        justify-content: center;
     }
 
     .tooltip {

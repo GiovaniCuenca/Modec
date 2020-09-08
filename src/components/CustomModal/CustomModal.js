@@ -32,14 +32,15 @@ const CustomModal = ({ isOpen, citiesList, closeModal }) => {
             <ModalWrapper>
                 <div className="close">
                     <button onClick={closeModal}>
-                        <FaTimes size={20}/>
+                        <FaTimes size={20} />
                     </button>
                 </div>
 
-                {citiesList && citiesList.map(city => (
-                    <div className="modal-content">
-                        <ul>
-                            <li>
+
+                <div className="modal-content" >
+                    <ul>
+                        {citiesList && citiesList.map((city, index) => (
+                            <li key={index}>
                                 <Link to={{
                                     pathname: `/city/${city.name}`,
                                     cityInfo: city
@@ -47,9 +48,10 @@ const CustomModal = ({ isOpen, citiesList, closeModal }) => {
                                 >{city.name}
                                 </Link>
                             </li>
-                        </ul>
-                    </div>
-                ))}
+                        ))}
+                    </ul>
+                </div>
+
             </ModalWrapper>
         </Modal>
     );

@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { CustomModal } from '../../components'
 import GoogleMaps from '../../components/GoogleMaps/GoogleMaps'
 import { MainMapContainer } from './styles'
 import { OpenWeatherMap } from '../../config'
 import api from '../../services/api'
+import { FaSearch } from 'react-icons/fa'
 
 const MainMap = () => {
     const [cities, setCities] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [location, setLocation] = useState();
+    const [initialLocation, setInicialLocation] = useState();
 
     const handleCities = async () => {
         if(!location) {
@@ -24,11 +26,6 @@ const MainMap = () => {
 
     const openModal = condition => {
         handleCities();
-
-        if(!location) {
-            return;
-        }
-
         setIsOpen(condition);
     }
 
@@ -40,9 +37,29 @@ const MainMap = () => {
         const _lat = lat.latLng.lat()
         const _lng = lat.latLng.lng()
 
-        console.log({ lat: _lat, lng: _lng })
         setLocation({ lat: _lat, lng: _lng })
     }
+
+    function getCurrentPosition() {
+        setIsLoading(true)
+
+        navigator.geolocation.getCurrentPosition(({ coords: { latitude: lat, longitude: lng } }) => {
+            const pos = { lat, lng }
+            console.log(pos)
+            setInicialLocation(pos)
+            setLocation(pos)
+            setIsLoading(false)
+            return;
+        })
+    }
+
+    useEffect(() => {
+        if(!location) {
+            getCurrentPosition()
+        }
+
+        return;
+    })
 
     return (
         <>
@@ -50,12 +67,12 @@ const MainMap = () => {
 
             <MainMapContainer>
                 <div className="container">
-                    <h1 className="page-title">Weather Acessment</h1>
+                    <h1 className="page-title">Weather Assessment</h1>
                     <p className="page-content">Mark the Map with the desired Location and click at the "Search" button</p>
 
-                    <button onClick={openModal}>SEARCH</button>
+                    <button onClick={openModal} className="search-button">SEARCH <FaSearch size={16}/></button>
 
-                    <GoogleMaps handleClick={handleMouseClick} location={location}/>
+                    <GoogleMaps handleClick={handleMouseClick} location={location} initialLocation={initialLocation} />
                 </div>
             </MainMapContainer>
         </>
